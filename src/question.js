@@ -5,14 +5,24 @@ class Question {
         this.answer = answer;
         this.difficulty = difficulty;
     }
-    shuffleChoices(){
-        let randomArr = [];
-        for(let i=0 ; i< this.choices.length ; i++){
-            let shuffle = Math.floor(Math.random() * this.choices.length); 
-            randomArr[shuffle] = this.choices[i]
+    shuffleChoices() {
+        for (let i = this.choices.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1)); 
+            [this.choices[i], this.choices[j]] = [this.choices[j], this.choices[i]]; 
+        }
+        return this.choices;
     }
-    return randomArr;
+    filterQuestionsByDifficulty() {
+        let difficulty1 = this.difficulty.filter((el) => (el === 1))
+        return difficulty1;
+    }
 }
-}
-let question1 = new Question ('How are you?',['good', 'bad', 'gg'], 'good', 1);
-console.log(question1.shuffleChoices());d
+const questions = [
+    new Question("What is 2 + 2?", ["3", "4", "5", "6"], "4", 1),
+    new Question("What is the capital of France?", ["Miami", "Paris", "Oslo", "Rome"], "Paris", 1),
+    new Question("Who created JavaScript?", ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"], "Brendan Eich", 2),
+    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
+    // Add more questions here
+  ];
+
+console.log(questions.shuffleChoices());
